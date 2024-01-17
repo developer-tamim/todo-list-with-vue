@@ -10,12 +10,20 @@
           v-model="task"
           placeholder="Enter your task"
           class="w-100 form-control"
+          @keyup.enter="submitTasks"
         />
-        <button class="btn btn-warning rounded-0" @click="submitTasks">Submit</button>
+        <button class="btn btn-warning rounded-0" @click="submitTasks">
+          Submit
+        </button>
+      </div>
+
+      <!-- table message -->
+      <div v-if="tasks.length === 0" class="mt-3">
+        <p class="text-center text-warning fw-bold">There is no task left.</p>
       </div>
 
       <!-- table -->
-      <div class="mt-3">
+      <div v-else class="mt-3">
         <table class="table table-bordered">
           <thead>
             <tr>
@@ -38,7 +46,7 @@
                     'text-warning': task.status === 'finished',
                   }"
                 >
-                {{ capitalizeFirstChart(task.status) }}
+                  {{ capitalizeFirstChart(task.status) }}
                 </span>
               </td>
               <td class="text-center">
@@ -48,7 +56,7 @@
               </td>
               <td class="text-center">
                 <div @click="deleteTasks(index)">
-                  <i class="fa-solid fa-trash"></i>
+                  <i class="fa-solid fa-trash-can text-danger"></i>
                 </div>
               </td>
             </tr>
@@ -70,20 +78,21 @@ export default {
       task: "",
       editTask: null,
       status: ["to-do", "in-progress", "finished"],
-      tasks: [
-        {
-          task: "Tasks1",
-          status: "to-do",
-        },
-        {
-          task: "Tasks2",
-          status: "in-progress",
-        },
-        {
-          task: "Tasks3",
-          status: "finished",
-        },
-      ],
+      tasks: [],
+      // tasks: [
+      //   {
+      //     task: "Tasks1",
+      //     status: "to-do",
+      //   },
+      //   {
+      //     task: "Tasks2",
+      //     status: "in-progress",
+      //   },
+      //   {
+      //     task: "Tasks3",
+      //     status: "finished",
+      //   },
+      // ],
     };
   },
   methods: {
