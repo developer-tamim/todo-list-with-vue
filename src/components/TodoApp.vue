@@ -38,6 +38,7 @@
                     'text-warning': task.status === 'finished',
                   }"
                 >
+                {{ capitalizeFirstChart(task.status) }}
                 </span>
               </td>
               <td class="text-center">
