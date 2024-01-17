@@ -11,6 +11,7 @@
           placeholder="Enter your task"
           class="w-100 form-control"
         />
+        <button class="btn btn-warning rounded-0" @click="submitTasks">Submit</button>
       </div>
 
       <!-- table -->
@@ -26,26 +27,26 @@
           </thead>
           <tbody>
             <tr v-for="(task, index) in tasks" :key="index">
-              <td>{{ task.tasks }}</td>
+              <td>{{ task.task }}</td>
               <td>
-                <span 
-                class="pointer select" 
-                @click="changeStatus(index)"
-                :class="{
-                  'text-danger' :task.status==='to-do',
-                  'text-success' :task.status==='in-progress',
-                  'text-warning' :task.status==='finished',
-                }"
+                <span
+                  class="pointer select"
+                  @click="changeStatus(index)"
+                  :class="{
+                    'text-danger': task.status === 'to-do',
+                    'text-success': task.status === 'in-progress',
+                    'text-warning': task.status === 'finished',
+                  }"
                 >
                 </span>
               </td>
               <td class="text-center">
-                <div @click="editTask(index)">
+                <div @click="editTasks(index)">
                   <i class="fa-regular fa-pen-to-square"></i>
                 </div>
               </td>
               <td class="text-center">
-                <div @click="deleteTask(index)">
+                <div @click="deleteTasks(index)">
                   <i class="fa-solid fa-trash"></i>
                 </div>
               </td>
@@ -84,16 +85,36 @@ export default {
       ],
     };
   },
-  methods:{
-    capitalizeFirstChart(srt){
+  methods: {
+    capitalizeFirstChart(srt) {
       return srt.charAt(0).toUpperCase() + srt.slice(1);
     },
-    changeStatus(index){
-      let newIndex=this.statuses.indexOf(this.task[index].status);
-      if(++newIndex>2) newIndex=0;
-      this.task[index].status=this.statuses[newIndex];
-  }
-  }
+    changeStatus(index) {
+      let newIndex = this.status.indexOf(this.tasks[index].status);
+      if (++newIndex > 2) newIndex = 0;
+      this.tasks[index].status = this.status[newIndex];
+    },
+    editTasks(index) {
+      this.task = this.tasks[index].task;
+      this.editTask = index;
+    },
+    deleteTasks(index) {
+      this.tasks.splice(index, 1);
+    },
+    submitTasks() {
+      if (this.task.length === 0) return;
+      if (this.editTask != null) {
+        this.tasks[this.editTask].task = this.task;
+        this.editTask = null;
+      } else {
+        this.tasks.push({
+          task: this.task,
+          status: "to-do",
+        });
+      }
+      this.task = "";
+    },
+  },
 };
 </script>
 
