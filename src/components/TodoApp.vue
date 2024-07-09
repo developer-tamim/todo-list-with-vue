@@ -19,7 +19,7 @@
 
       <!-- table message -->
       <div v-if="tasks.length === 0" class="mt-3">
-        <p class="text-center text-warning fw-bold">There is no task left.</p>
+        <p class="text-center text-secondary fw-bold">There is no task left.</p>
       </div>
 
       <!-- table -->
